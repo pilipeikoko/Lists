@@ -160,7 +160,8 @@ template<typename ValueType>
 inline void UnidirectionalList<ValueType>::PrintList()
 {
 	if (!top_element_) {
-		throw "its empty\n";
+		string message = "Its empty\n";
+		throw message;
 	}
 	auto current_element = top_element_;
 
