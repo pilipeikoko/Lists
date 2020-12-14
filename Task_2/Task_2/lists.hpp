@@ -8,17 +8,15 @@ using namespace std;
 template<typename ValueType, template <class>typename List>
 class Queue;
 
-
 template<typename ValueType>
 class UnidirectionalList {
 protected:
-
 	class Element {
 	public:
-		shared_ptr<Element> prev_element_;
 		shared_ptr<Element> next_element_;
 		ValueType id_;
 	};
+protected:
 	shared_ptr<Element> top_element_;
 	ValueType GetFrontElement();
 public:
@@ -30,15 +28,20 @@ public:
 	bool Find(ValueType id);
 
 	void PrintList();
-	
+
 };
 
 
 template<typename ValueType>
-class BidirectionalList:public UnidirectionalList<ValueType> {
+class BidirectionalList :public UnidirectionalList<ValueType> {
 private:
-	using UnidirectionalList<ValueType>::Element;
-	using UnidirectionalList<ValueType>::top_element_;
+	class Element :public UnidirectionalList<ValueType>::Element {
+	public:
+		using UnidirectionalList<ValueType>::Element::id_;
+		shared_ptr<Element> next_element_;
+		shared_ptr<Element> prev_element_;
+	};
+	shared_ptr<Element> top_element_;
 	shared_ptr<Element> front_element_;
 
 	ValueType GetFrontElement() { return this->front_element_->id_; }
@@ -99,7 +102,7 @@ inline ValueType UnidirectionalList<ValueType>::GetFrontElement()
 template<typename ValueType>
 inline void UnidirectionalList<ValueType>::PushBack(ValueType id)
 {
-		if (!top_element_) {
+	if (!top_element_) {
 		shared_ptr<Element> new_top(new Element);
 		new_top->id_ = (id);
 
@@ -161,11 +164,11 @@ inline void UnidirectionalList<ValueType>::PrintList()
 	}
 	auto current_element = top_element_;
 
-	while (current_element->next_element_) {
+	while (current_element) {
 		std::cout << current_element->id_ << " ";
 		current_element = current_element->next_element_;
 	}
-	std::cout << current_element->id_ << endl;
+	std::cout << endl;
 }
 
 template<typename ValueType>
@@ -205,7 +208,7 @@ inline void BidirectionalList<ValueType>::PushBack(ValueType id)
 		top_element_ = new_top;
 		top_element_->next_element_ = nullptr;
 		front_element_ = new_top;
-		front_element_->prev_element_ = nullptr ;
+		front_element_->prev_element_ = nullptr;
 		return;
 	}
 
@@ -262,7 +265,7 @@ inline void BidirectionalList<ValueType>::PopElement(ValueType id)
 				current_element->prev_element_->next_element_ = current_element->next_element_;
 			}
 			if (current_element->next_element_) {
-				current_element->next_element_->prev_element_ =  current_element->prev_element_;
+				current_element->next_element_->prev_element_ = current_element->prev_element_;
 			}
 			return;
 		}
@@ -298,9 +301,9 @@ template<typename ValueType>
 inline void BidirectionalList<ValueType>::PrintList()
 {
 	shared_ptr<Element> current_element = front_element_;
-	while (current_element->next_element_) {
+	while (current_element) {
 		std::cout << current_element->id_ << " ";
 		current_element = current_element->next_element_;
 	}
-	std::cout << top_element_->id_ << endl;
+	std::cout << endl;
 }
