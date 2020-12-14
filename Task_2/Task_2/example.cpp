@@ -48,21 +48,21 @@ int main()
         bidirectional_list.PopElement(0);
         bidirectional_list.PrintList();
         bidirectional_list.PushFront(0);
-        bidirectional_list.PrintList();
+        bidirectional_list.PrintList();  
 
-        Queue<int, BidirectionalList> bidirectional_queue;
-        bidirectional_queue.PushBack(2);
-        bidirectional_queue.PushBack(3);
-        cout << bidirectional_queue.Find(3) << endl;
-        cout << bidirectional_queue.Pop() << endl;
-        cout << bidirectional_queue.Pop() << endl;
+        BidirectionalList<int> bidirectional_list_1;
+        bidirectional_list_1.PushBack(1);
+        bidirectional_list_1.PushBack(2);
+        Queue<int, BidirectionalList> bidirectional_list_decorator(bidirectional_list_1);
+        cout << bidirectional_list_decorator.Pop() << endl;
+        cout << bidirectional_list_decorator.Pop() << endl;
 
-        Queue<int, UnidirectionalList> unidirectional_queue;
-        unidirectional_queue.PushBack(2);
-        unidirectional_queue.PushBack(3);
-        cout << unidirectional_queue.Find(3) << endl;
-        cout << unidirectional_queue.Pop() << endl;
-        cout << unidirectional_queue.Pop() << endl;
+        UnidirectionalList<int> unidirectional_list_1;
+        unidirectional_list_1.PushBack(1);
+        unidirectional_list_1.PushBack(2);
+        Queue<int, UnidirectionalList> unidirectional_list_decorator(unidirectional_list_1);
+        cout << unidirectional_list_decorator.Pop() << endl;
+        cout << unidirectional_list_decorator.Pop() << endl;
 
     }
     catch (string message) {

@@ -65,18 +65,19 @@ public:
 template<typename ValueType, template <class>typename List>
 class Queue {
 private:
-	List<ValueType> list_;
+	List<ValueType>* list_;
 public:
+	Queue(List<ValueType>& list) {list_ = &list; }
 	void PushBack(ValueType id) {
-		list_.PushBack(id);
+		list_->PushBack(id);
 	}
 	ValueType Pop() {
-		ValueType id_ = list_.GetFrontElement();
-		list_.PopElement(list_.GetFrontElement());
+		ValueType id_ = list_->GetFrontElement();
+		list_->PopElement(list_->GetFrontElement());
 		return id_;
 	}
 	bool Find(ValueType id) {
-		return list_.Find(id);
+		return list_->Find(id);
 	}
 };
 
